@@ -1,0 +1,46 @@
+
+
+<mat-card style="padding: 100px;">
+    <mat-card style="padding: 50px;">
+        <h4 class="mat-h4 mat-subheading-1">Website names</h4>
+    
+        <mat-nav-list>
+        <mat-list-item *ngFor="let link of domains">
+           <button mat-icon-button (click)="getDataSelectedDomain(link)">
+            {{ link }}
+           </button>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-card>
+    
+    <mat-card style="padding: 50px;">
+        <h4 class="mat-h4 mat-subheading-1">Website structure</h4>
+        <i *ngIf="dataSource.data.length === 0" style="font-size:12px">Select a website from above list</i>
+        
+        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+     <!-- This is the tree node template for leaf nodes -->
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding >
+            <!-- use a disabled button to provide padding for tree leaf -->
+            <!-- <button mat-icon-button disabled></button> -->
+                <span>{{node.name}}</span>
+            </mat-tree-node>
+            <!-- This is the tree node template for expandable nodes -->
+            <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+                <span style="font-weight: 500;">
+                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                        {{treeControl.isExpanded(node) ? 'remove' : 'add'}}
+                    </mat-icon>
+                </button>
+                        {{node.name}}
+                </span>
+            </mat-tree-node>
+        </mat-tree>
+    </mat-card>
+
+</mat-card>
+
+
+
+
+
